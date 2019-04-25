@@ -46,30 +46,43 @@
     
     CGFloat width = self.targetWidth > -1 ? (CGFloat)self.targetWidth : image.size.width;
     CGFloat height = self.targetHeight > -1 ? (CGFloat)self.targetHeight : image.size.height;
-    CGFloat croperWidth;
-    CGFloat croperHeight;
+    CGFloat cropperWidth;
+    CGFloat cropperHeight;
+    CGFloat correctionScale;
     
-     if (self.widthRatio < 0 || self.heightRatio < 0){
-         cropController.keepingCropAspectRatio = NO;
-         croperWidth = MIN(width, height);
-         croperHeight = MIN(width, height); 
+    if (self.widthRatio < 0 || self.heightRatio < 0){
+      cropController.keepingCropAspectRatio = NO;
+      cropperWidth = MIN(width, height);
+      cropperHeight = MIN(width, height); 
     } else {
-         cropController.keepingCropAspectRatio = YES;
-         if(self.widthRatio > self.heightRatio) {
-             croperWidth = width;
-             croperHeight = width * self.heightRatio / self.widthRatio;
-         } else {
-             croperWidth = height * self.widthRatio / self.heightRatio;
-             croperHeight = height;
-         }
-     }
+      cropController.keepingCropAspectRatio = YES;
+      
+      if (width < height) {
+        cropperWidth = width;
+        cropperHeight = width * self.heightRatio / self.widthRatio;
+      }
+      
+      if (width > height) {
+        cropperHeight = height;
+        cropperWidth = height * self.widthRatio / self.heightRatio;
+      }
+      
+      if (cropperWidth > width) {
+        correctionScale = width / cropperWidth;
+        cropperHeight = cropperHeight * correctionScale;
+        cropperWidth = cropperWidth * correctionScale;
+      }
+
+      if (cropperHeight > height) {
+        correctionScale = height / cropperHeight;
+        cropperHeight = cropperHeight * correctionScale;
+        cropperWidth = cropperWidth * correctionScale;
+      }
+    }
      
     cropController.toolbarHidden = YES;
-     cropController.rotationEnabled = NO;
-     cropController.imageCropRect = CGRectMake((width - croperWidth) / 2,
-                                               (height - croperHeight) / 2,
-                                               croperWidth,
-                                               croperHeight);
+    cropController.rotationEnabled = NO;
+    cropController.imageCropRect = CGRectMake((width - cropperWidth) / 2, (height - cropperHeight) / 2, cropperWidth, cropperHeight);
     
     self.callbackId = command.callbackId;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:cropController];

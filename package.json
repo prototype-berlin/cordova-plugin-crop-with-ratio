@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Crop an image in a Cordova app with ratio",
   "cordova": {
-    "id": "cordova-plugin-crop",
+    "id": "@prototypeberlin/cordova-plugin-crop",
     "platforms": [
       "android",
       "ios"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/obeza/cordova-plugin-crop-with-ratio"
+    "url": "https://github.com/prototype-berlin/cordova-plugin-crop-with-ratio"
   },
   "keywords": [
     "cordova",

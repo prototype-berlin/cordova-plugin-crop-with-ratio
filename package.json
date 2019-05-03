@@ -1,6 +1,6 @@
 {
   "name": "@prototypeberlin/cordova-plugin-crop",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Crop an image in a Cordova app with ratio",
   "cordova": {
     "id": "@prototypeberlin/cordova-plugin-crop",
